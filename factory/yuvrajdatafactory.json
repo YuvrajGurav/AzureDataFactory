@@ -1,0 +1,9 @@
+{
+	"name": "yuvrajdatafactory",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "5345ed50-a6e3-4acf-a73d-604ee3c02cf7",
+		"tenantId": "5e27933e-1d34-4724-93cd-0615bf20a3d5"
+	}
+}
