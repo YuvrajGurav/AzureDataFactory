@@ -1,0 +1,17 @@
+{
+	"name": "DS_SQL_RANK",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_ASQL",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "tblRank"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

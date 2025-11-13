@@ -62,8 +62,11 @@
 				"type": "String"
 			}
 		},
+		"folder": {
+			"name": "Data Movements"
+		},
 		"annotations": [],
-		"lastPublishTime": "2025-10-19T14:10:36Z"
+		"lastPublishTime": "2025-11-11T05:37:11Z"
 	},
 	"type": "Microsoft.DataFactory/factories/pipelines"
 }

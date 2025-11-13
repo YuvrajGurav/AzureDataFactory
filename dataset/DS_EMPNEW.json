@@ -1,0 +1,35 @@
+{
+	"name": "DS_EMPNEW",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_ASQL",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "EMPLOYEEID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "EMPLOYEENAME",
+				"type": "varchar"
+			},
+			{
+				"name": "EMAIL",
+				"type": "varchar"
+			},
+			{
+				"name": "CONTACT",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "EMPLOYEESNEW"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

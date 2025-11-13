@@ -1,0 +1,17 @@
+{
+	"name": "DS_SQL_PIVOT",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_ASQL",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "tblPivot"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
