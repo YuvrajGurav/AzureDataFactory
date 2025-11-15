@@ -1,0 +1,9 @@
+{
+	"name": "DevYuvrajGuravDataFactory",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "cd89f34b-a612-43da-af2e-08a2041056f2",
+		"tenantId": "bbadc8cd-8fd1-46d0-be6f-5aa0aaee9ba3"
+	}
+}
