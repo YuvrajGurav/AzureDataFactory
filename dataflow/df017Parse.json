@@ -1,0 +1,75 @@
+{
+	"name": "df017Parse",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_ORDER_DETAILS_XLSX",
+						"type": "DatasetReference"
+					},
+					"name": "ReadExcel"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_SQL_PARSE",
+						"type": "DatasetReference"
+					},
+					"name": "sink"
+				}
+			],
+			"transformations": [
+				{
+					"name": "parse"
+				},
+				{
+					"name": "parse1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          OrderId as integer,",
+				"          OrderDate as date,",
+				"          OrderDetails as string,",
+				"          BatchDetails as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> ReadExcel",
+				"ReadExcel parse(OrdereDet = OrderDetails ? (Item as string,",
+				"          Qty as integer,",
+				"          Price as integer),",
+				"     format: 'delimited',",
+				"     columnNamesAsHeader: false,",
+				"     columnDelimiter: '|',",
+				"     nullValue: '') ~> parse",
+				"parse parse(BatchDet = BatchDetails ? (batchid as integer,",
+				"          site as string),",
+				"     format: 'json',",
+				"     documentForm: 'arrayOfDocuments') ~> parse1",
+				"parse1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          OrderId,",
+				"          OrderDate,",
+				"          Item = OrdereDet.Item,",
+				"          Qty = OrdereDet.Qty,",
+				"          Price = OrdereDet.Price,",
+				"          Batchid = BatchDet.batchid,",
+				"          Batchsite = BatchDet.site",
+				"     )) ~> sink"
+			]
+		}
+	}
+}

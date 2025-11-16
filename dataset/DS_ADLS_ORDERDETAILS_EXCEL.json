@@ -1,0 +1,33 @@
+{
+	"name": "DS_ADLS_ORDERDETAILS_EXCEL",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_ADLS",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "OrderDetails",
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "OrderDetails.xlsx",
+				"fileSystem": "mycontainer"
+			}
+		},
+		"schema": [
+			{
+				"type": "String"
+			},
+			{
+				"type": "String"
+			},
+			{
+				"type": "String"
+			},
+			{
+				"type": "String"
+			}
+		]
+	}
+}
