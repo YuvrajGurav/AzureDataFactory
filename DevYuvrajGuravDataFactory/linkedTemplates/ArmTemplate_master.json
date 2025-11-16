@@ -17,15 +17,15 @@
 		},
 		"LS_ADLS_properties_typeProperties_url": {
 			"type": "string",
-			"defaultValue": "https://devyuvraj.dfs.core.windows.net/"
+			"defaultValue": "https://devyuvrajstorage.dfs.core.windows.net/"
 		},
 		"LS_ASQL_properties_typeProperties_server": {
 			"type": "string",
-			"defaultValue": "devyuvrajsqlserver.database.windows.net"
+			"defaultValue": "devyuvrajguravserver.database.windows.net"
 		},
 		"LS_ASQL_properties_typeProperties_database": {
 			"type": "string",
-			"defaultValue": "devyuvrajdb"
+			"defaultValue": "devyuvrajgurav"
 		},
 		"LS_ASQL_properties_typeProperties_userName": {
 			"type": "string",
@@ -198,6 +198,26 @@
 			},
 			"dependsOn": [
 				"[resourceId('Microsoft.Resources/deployments', 'DevYuvrajGuravDataFactory_ArmTemplate_5')]"
+			]
+		},
+		{
+			"name": "DevYuvrajGuravDataFactory_ArmTemplate_7",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_7.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'DevYuvrajGuravDataFactory_ArmTemplate_6')]"
 			]
 		}
 	]

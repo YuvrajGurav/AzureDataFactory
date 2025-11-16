@@ -12,13 +12,13 @@
 			"value": ""
 		},
 		"LS_ADLS_properties_typeProperties_url": {
-			"value": "https://devyuvraj.dfs.core.windows.net/"
+			"value": "https://devyuvrajstorage.dfs.core.windows.net/"
 		},
 		"LS_ASQL_properties_typeProperties_server": {
-			"value": "devyuvrajsqlserver.database.windows.net"
+			"value": "devyuvrajguravserver.database.windows.net"
 		},
 		"LS_ASQL_properties_typeProperties_database": {
-			"value": "devyuvrajdb"
+			"value": "devyuvrajgurav"
 		},
 		"LS_ASQL_properties_typeProperties_userName": {
 			"value": "yuvraj"

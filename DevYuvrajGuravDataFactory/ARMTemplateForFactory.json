@@ -17,15 +17,15 @@
 		},
 		"LS_ADLS_properties_typeProperties_url": {
 			"type": "string",
-			"defaultValue": "https://devyuvraj.dfs.core.windows.net/"
+			"defaultValue": "https://devyuvrajstorage.dfs.core.windows.net/"
 		},
 		"LS_ASQL_properties_typeProperties_server": {
 			"type": "string",
-			"defaultValue": "devyuvrajsqlserver.database.windows.net"
+			"defaultValue": "devyuvrajguravserver.database.windows.net"
 		},
 		"LS_ASQL_properties_typeProperties_database": {
 			"type": "string",
-			"defaultValue": "devyuvrajdb"
+			"defaultValue": "devyuvrajgurav"
 		},
 		"LS_ASQL_properties_typeProperties_userName": {
 			"type": "string",
@@ -5198,6 +5198,57 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/059pplLookupTransformation')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Data Flow",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "df013Lookup",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"ReadSales": {},
+									"ReadProducts": {},
+									"ReadCustomers": {},
+									"sink1": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"folder": {
+					"name": "Tranformations"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/df013Lookup')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/pplRegions')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -6239,6 +6290,44 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/DS_CUSTOMERS')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LS_ADLS",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "Customers.csv",
+						"folderPath": "lookup",
+						"fileSystem": "mycontainer"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "CustomerKey",
+						"type": "String"
+					},
+					{
+						"name": "FullName",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/LS_ADLS')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/DS_CUSTOMSQL')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -6759,6 +6848,44 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/DS_PRODUCTS')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LS_ADLS",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "Products.csv",
+						"folderPath": "lookup",
+						"fileSystem": "mycontainer"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "ProductKey",
+						"type": "String"
+					},
+					{
+						"name": "EnglishProductName",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/LS_ADLS')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/DS_RANK')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -6836,6 +6963,48 @@
 					},
 					{
 						"name": "EnglishProductName",
+						"type": "String"
+					},
+					{
+						"name": "SalesAmount",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/LS_ADLS')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_SALES')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LS_ADLS",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "Sales.csv",
+						"folderPath": "lookup",
+						"fileSystem": "mycontainer"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "ProductKey",
+						"type": "String"
+					},
+					{
+						"name": "CustomerKey",
 						"type": "String"
 					},
 					{
@@ -7163,6 +7332,27 @@
 				"typeProperties": {
 					"schema": "dbo",
 					"table": "tblIndia"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/LS_ASQL')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_SQL_LOOKUP')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LS_ASQL",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "tblLookup"
 				}
 			},
 			"dependsOn": [
@@ -7681,7 +7871,7 @@
 				"typeProperties": {
 					"server": "[parameters('LS_ASQL_properties_typeProperties_server')]",
 					"database": "[parameters('LS_ASQL_properties_typeProperties_database')]",
-					"encrypt": "mandatory",
+					"encrypt": "optional",
 					"trustServerCertificate": false,
 					"authenticationType": "SQL",
 					"userName": "[parameters('LS_ASQL_properties_typeProperties_userName')]",
@@ -8561,6 +8751,111 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/DS_CSV')]",
 				"[concat(variables('factoryId'), '/datasets/DS_SQL_WINDOW')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/df013Lookup')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "DS_SALES",
+								"type": "DatasetReference"
+							},
+							"name": "ReadSales"
+						},
+						{
+							"dataset": {
+								"referenceName": "DS_PRODUCTS",
+								"type": "DatasetReference"
+							},
+							"name": "ReadProducts"
+						},
+						{
+							"dataset": {
+								"referenceName": "DS_CUSTOMERS",
+								"type": "DatasetReference"
+							},
+							"name": "ReadCustomers"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "DS_SQL_LOOKUP",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "lookupProducts"
+						},
+						{
+							"name": "lookupcustomers"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          ProductKey as short,",
+						"          CustomerKey as short,",
+						"          SalesAmount as double",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> ReadSales",
+						"source(output(",
+						"          ProductKey as short,",
+						"          EnglishProductName as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> ReadProducts",
+						"source(output(",
+						"          CustomerKey as short,",
+						"          FullName as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> ReadCustomers",
+						"ReadSales, ReadProducts lookup(ReadSales@ProductKey == ReadProducts@ProductKey,",
+						"     multiple: false,",
+						"     pickup: 'any',",
+						"     broadcast: 'auto')~> lookupProducts",
+						"lookupProducts, ReadCustomers lookup(ReadSales@CustomerKey == ReadCustomers@CustomerKey,",
+						"     multiple: false,",
+						"     pickup: 'any',",
+						"     broadcast: 'auto')~> lookupcustomers",
+						"lookupcustomers sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError',",
+						"     mapColumn(",
+						"          ProductKey = ReadSales@ProductKey,",
+						"          CustomerKey = ReadSales@CustomerKey,",
+						"          SalesAmount,",
+						"          EnglishProductName,",
+						"          FullName",
+						"     )) ~> sink1"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/DS_SALES')]",
+				"[concat(variables('factoryId'), '/datasets/DS_PRODUCTS')]",
+				"[concat(variables('factoryId'), '/datasets/DS_CUSTOMERS')]",
+				"[concat(variables('factoryId'), '/datasets/DS_SQL_LOOKUP')]"
 			]
 		}
 	]

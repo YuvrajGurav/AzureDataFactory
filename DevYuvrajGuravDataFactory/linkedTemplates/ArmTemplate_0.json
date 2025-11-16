@@ -17,15 +17,15 @@
 		},
 		"LS_ADLS_properties_typeProperties_url": {
 			"type": "string",
-			"defaultValue": "https://devyuvraj.dfs.core.windows.net/"
+			"defaultValue": "https://devyuvrajstorage.dfs.core.windows.net/"
 		},
 		"LS_ASQL_properties_typeProperties_server": {
 			"type": "string",
-			"defaultValue": "devyuvrajsqlserver.database.windows.net"
+			"defaultValue": "devyuvrajguravserver.database.windows.net"
 		},
 		"LS_ASQL_properties_typeProperties_database": {
 			"type": "string",
-			"defaultValue": "devyuvrajdb"
+			"defaultValue": "devyuvrajgurav"
 		},
 		"LS_ASQL_properties_typeProperties_userName": {
 			"type": "string",
@@ -568,7 +568,7 @@
 				"typeProperties": {
 					"server": "[parameters('LS_ASQL_properties_typeProperties_server')]",
 					"database": "[parameters('LS_ASQL_properties_typeProperties_database')]",
-					"encrypt": "mandatory",
+					"encrypt": "optional",
 					"trustServerCertificate": false,
 					"authenticationType": "SQL",
 					"userName": "[parameters('LS_ASQL_properties_typeProperties_userName')]",
